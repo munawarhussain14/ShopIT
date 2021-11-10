@@ -8,13 +8,13 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please enter your name'],
-        maxLength: [30, 'Your name cannot exceed 30 characters']
+        maxlength: [30, 'Your name cannot exceed 30 characters']
     },
     email: {
         type: String,
         required: [true, 'Please enter your email'],
         unique: true,
-        validator: [validator.isEmail, 'Please enter valid email address']
+        validate: [validator.isEmail, 'Please enter valid email address']
     },
     password: {
         type: String,
