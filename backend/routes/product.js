@@ -7,9 +7,13 @@
         newProduct, 
         getSingleProduct, 
         updateProduct, 
-        deleteProduct } =  require("../controllers/productController");
+        deleteProduct,
+        createProductReview,
+        getAllProductsReviews,
+        deleteReview } =  require("../controllers/productController");
 
     const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
+const { route } = require("./order");
 
     router.route("/products").get(getProducts);
 
@@ -21,4 +25,8 @@
     .put(isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
     .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct);
 
+    router.route("/review").put(isAuthenticatedUser, createProductReview);
+    router.route("/reviews").get(isAuthenticatedUser, getAllProductsReviews);
+    router.route("/reviews").delete(isAuthenticatedUser, deleteReview);
+    
     module.exports = router;
