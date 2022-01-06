@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Switch,
+  Route,
+} from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
 import Footer from "./components/layout/Footer";
@@ -9,7 +14,11 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <Route path="/" element={<Home />} />
+        <div className="container container-fluid">
+          <Routes>
+            <Route path="/" element={<Home />} exact />
+          </Routes>
+        </div>
         <Footer />
       </div>
     </Router>
