@@ -12,6 +12,8 @@ import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
+import Profile from "./components/user/Profile";
+import ProtectedRoute from "./components/route/ProtectedRoute";
 
 import { loadUser } from "./actions/userActions";
 import store from "./store";
@@ -32,6 +34,18 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />} exact />
             <Route path="/login" element={<Login />} exact />
             <Route path="/register" element={<Register />} exact />
+            <Route
+              path="/me"
+              element={<ProtectedRoute component={<Profile />} />}
+              exact
+            />
+            {/* <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute isAdmin={true} component={<Dashboard />} />
+              }
+              exact
+            /> */}
           </Routes>
         </div>
         <Footer />

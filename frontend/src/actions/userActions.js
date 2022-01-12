@@ -9,6 +9,8 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
 
@@ -75,27 +77,35 @@ export const register =
     }
   };
 
-export const loadUser =
-  (name, email, password /*userData*/) => async (dispatch) => {
-    try {
-      dispatch({ type: REGISTER_USER_REQUEST });
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOAD_USER_REQUEST });
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+    const { data } = await axios.get("/api/v1/me");
 
-      const { data } = await axios.get("/api/v1/me", config);
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: data.user,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOAD_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
-      dispatch({
-        type: LOAD_USER_SUCCESS,
-        payload: data.user,
-      });
-    } catch (error) {
-      dispatch({
-        type: REGISTER_USER_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+export const logout = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get("/api/v1/logout");
+
+    dispatch({
+      type: LOGOUT_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOGOUT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
